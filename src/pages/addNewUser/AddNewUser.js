@@ -57,8 +57,10 @@ const AddNewUser = () => {
         resolver: yupResolver(schema),
     })
     const onSubmit = async (data) => {
+        // mock userName field - necessary for sorting functionality in the table since it is not completed on BE
+        const dataWithUserName = { ...data, username: '' }
         try {
-            dispatch(addNewUser(data))
+            dispatch(addNewUser(dataWithUserName))
             reset()
             navigate('/')
         } catch (err) {

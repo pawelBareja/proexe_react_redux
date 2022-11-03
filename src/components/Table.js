@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -37,8 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const tableHeadLabels = ['Id', 'Name', 'Username', 'Email', 'City', 'Edit', 'Delete']
 
 const UsersTable = ({ users }) => {
+    const [usersList, setUsersList] = useState([])
+    const [isSortAscending, setIsSortAscending] = useState(true)
     const [openModal, setOpenModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState()
+
+    useEffect(() => {
+        setUsersList(users)
+    }, [users])
 
     const initModal = (id) => {
         setUserToDelete(id)
@@ -53,6 +59,19 @@ const UsersTable = ({ users }) => {
 
     const redirectToEditUser = (id) => {
         navigate(`/editUser/${id}`)
+    }
+
+    const sortAlphabetically = (name) => {
+        if (name === 'Username') {
+            let sortedList = [...usersList]
+            sortedList = sortedList.sort((a, b) => {
+                return isSortAscending
+                    ? a.username.localeCompare(b.username)
+                    : b.username.localeCompare(a.username)
+            })
+            setUsersList(sortedList)
+            setIsSortAscending((prev) => !prev)
+        }
     }
 
     return (
@@ -89,15 +108,20 @@ const UsersTable = ({ users }) => {
                         <TableHead>
                             <StyledTableRow sx={{ background: 'darkGrey' }}>
                                 {tableHeadLabels.map((t) => (
-                                    <StyledTableCell key={t} align="right">
+                                    <StyledTableCell
+                                        sx={t === 'Username' && { cursor: 'pointer ' }}
+                                        key={t}
+                                        align="right"
+                                        onClick={() => sortAlphabetically(t)}
+                                    >
                                         {t}
                                     </StyledTableCell>
                                 ))}
                             </StyledTableRow>
                         </TableHead>
                         <TableBody>
-                            {users.length
-                                ? users.map((u) => (
+                            {usersList.length
+                                ? usersList.map((u) => (
                                       <StyledTableRow key={`${u.id}${u.username}`}>
                                           <StyledTableCell component="th" scope="row">
                                               {u.id}

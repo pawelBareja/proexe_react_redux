@@ -77,7 +77,7 @@ const AddNewUser = () => {
     const onSubmit = async (data) => {
         const dataWithId = { ...data, id: userId }
         try {
-            dispatch(editUser(dataWithId)).unwrap()
+            dispatch(editUser(dataWithId))
             reset()
         } catch (err) {
             console.error('Failed to edit the user: ', err)
