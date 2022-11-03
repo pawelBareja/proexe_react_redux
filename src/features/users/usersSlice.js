@@ -2,16 +2,16 @@
 /* eslint-disable no-unused-vars */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getUsers = createAsyncThunk('users/getUSers', async (initialState) => {
+export const getUsers = createAsyncThunk('users/getUSers', async (data) => {
     return fetch('https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data').then(
         (res) => res.json()
     )
 })
 
-export const addNewUser = createAsyncThunk('users/addNewUser', async (initialState) => {
+export const addNewUser = createAsyncThunk('users/addNewUser', async (data) => {
     return fetch('https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data', {
         method: 'POST',
-        body: JSON.stringify(initialState),
+        body: JSON.stringify(data),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         },
@@ -22,14 +22,12 @@ export const addNewUser = createAsyncThunk('users/addNewUser', async (initialSta
         })
 })
 
-export const editUser = createAsyncThunk('users/editUser', async (initialState) => {
+export const editUser = createAsyncThunk('users/editUser', async (data) => {
     return fetch(
-        `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${
-            initialState.id
-        }`,
+        `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${data.id}`,
         {
             method: 'PUT',
-            body: JSON.stringify(initialState),
+            body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
@@ -41,14 +39,13 @@ export const editUser = createAsyncThunk('users/editUser', async (initialState) 
         })
 })
 
-export const deleteUser = createAsyncThunk('users/deleteUser', async (initialState) => {
-    console.log('initStee', initialState)
+export const deleteUser = createAsyncThunk('users/deleteUser', async (data) => {
     return fetch(
-        `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${initialState}`,
+        `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${data}`,
         {
             method: 'DELETE',
         }
-    ).then(() => initialState)
+    ).then(() => data)
 })
 
 const userSlice = createSlice({

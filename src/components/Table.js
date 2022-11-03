@@ -89,7 +89,7 @@ const UsersTable = ({ users }) => {
                         <TableHead>
                             <StyledTableRow sx={{ background: 'darkGrey' }}>
                                 {tableHeadLabels.map((t) => (
-                                    <StyledTableCell kry={t} align="right">
+                                    <StyledTableCell key={t} align="right">
                                         {t}
                                     </StyledTableCell>
                                 ))}
@@ -98,7 +98,7 @@ const UsersTable = ({ users }) => {
                         <TableBody>
                             {users.length
                                 ? users.map((u) => (
-                                      <StyledTableRow key={u.name}>
+                                      <StyledTableRow key={`${u.id}${u.username}`}>
                                           <StyledTableCell component="th" scope="row">
                                               {u.id}
                                           </StyledTableCell>
@@ -111,7 +111,7 @@ const UsersTable = ({ users }) => {
                                           <StyledTableCell align="right">
                                               {u.email || 'no data'}
                                           </StyledTableCell>
-                                          {u.adress ? (
+                                          {u.address ? (
                                               <StyledTableCell align="right">
                                                   {u.address.city}
                                               </StyledTableCell>

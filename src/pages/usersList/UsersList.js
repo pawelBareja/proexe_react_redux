@@ -1,6 +1,7 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import UsersTable from '../../components/Table'
+import Layout from '../../layout/Layout'
 
 const UsersList = ({ users, status }) => {
     if (status === 'loading') {
@@ -8,12 +9,9 @@ const UsersList = ({ users, status }) => {
     }
 
     return (
-        <>
-            <Typography variant="h3" component="h1" my={5}>
-                Dashboard
-            </Typography>
+        <Layout>
             <UsersTable users={users} />
-        </>
+        </Layout>
     )
 }
 

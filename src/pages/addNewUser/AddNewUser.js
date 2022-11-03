@@ -6,13 +6,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-import Divider from '@mui/material/Divider'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
-import { addNewUser } from '../../../features/users/usersSlice'
+import { addNewUser } from '../../features/users/usersSlice'
+import FormHeader from '../../components/form/FormHeader'
+import ActionButtons from '../../components/form/ActionButtons'
+import Layout from '../../layout/Layout'
 
 const Wrapper = styled(Box)(({ theme }) => ({
     minHeight: '100px',
@@ -71,81 +71,50 @@ const AddNewUser = () => {
     }
 
     return (
-        <>
-            <Typography variant="h3" component="h1" my={5}>
-                Dashboard
-            </Typography>
+        <Layout>
             <Paper sx={{ padding: '20px', borderRadius: '10px' }}>
-                <Typography variant="h5" component="h2">
-                    Form
-                </Typography>
-                <Box py={4}>
-                    <Divider />
-                </Box>
+                <FormHeader />
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Wrapper>
-                        <Typography variant="body1" component="body" pr={10} pt={2}>
+                        <Typography variant="h6" component="h6" pr={10} pt={2}>
                             Name
                         </Typography>
                         <InputWrapper>
                             <TextField
+                                error={errors.name && errors.name.message}
                                 sx={{ width: '100%' }}
                                 id="name"
                                 variant="outlined"
                                 {...register('name')}
                             />
-                            <Typography variant="body1" component="body" color="error" pt={2}>
+                            <Typography variant="h6" component="h6" color="error" pt={2}>
                                 {errors.name && errors.name.message}
                             </Typography>
                         </InputWrapper>
                     </Wrapper>
 
                     <Wrapper>
-                        <Typography variant="body1" component="body" pr={10} pt={2}>
+                        <Typography variant="h6" component="h6" pr={10} pt={2}>
                             Email
                         </Typography>
                         <InputWrapper>
                             <TextField
+                                error={errors.email && errors.email.message}
                                 sx={{ width: '100%' }}
                                 id="email"
                                 variant="outlined"
                                 {...register('email')}
                             />
-                            <Typography variant="body1" component="body" color="error" pt={2}>
+                            <Typography variant="h6" component="h6" color="error" pt={2}>
                                 {errors.email && errors.email.message}
                             </Typography>
                         </InputWrapper>
                     </Wrapper>
-
-                    <Stack
-                        direction="row"
-                        justifyContent="flex-end"
-                        alignItems="center"
-                        spacing={2}
-                    >
-                        <Button
-                            variant="outlined"
-                            size="large"
-                            color="error"
-                            sx={{ width: '120px' }}
-                            onClick={redirectToHomePage}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            variant="contained"
-                            size="large"
-                            color="success"
-                            sx={{ width: '120px' }}
-                            type="submit"
-                        >
-                            Submit
-                        </Button>
-                    </Stack>
+                    <ActionButtons redirectToHomePage={redirectToHomePage} />
                 </form>
             </Paper>
-        </>
+        </Layout>
     )
 }
 

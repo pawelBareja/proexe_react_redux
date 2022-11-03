@@ -8,11 +8,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './styles/customTheme'
 import { getUsers } from './features/users/usersSlice'
-import UsersList from './pages/postsList/UsersList'
-import AddNewUser from './pages/postsList/addNewUser/AddNewUser'
+import UsersList from './pages/usersList/UsersList'
+import AddNewUser from './pages/addNewUser/AddNewUser'
 import EditUser from './pages/editUser/EditUser'
-
-// wzorowoałę sięna console.log()
+import ErrorPage from './pages/errorPage/ErrorPage'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -29,14 +28,7 @@ const App = () => {
                     <Route path="/" element={<UsersList users={users} status={status} />} />
                     <Route exact path="/addnewuser" element={<AddNewUser />} />
                     <Route exact path="/edituser/:userId" element={<EditUser />} />
-                    <Route
-                        path="*"
-                        element={
-                            <main style={{ padding: '1rem' }}>
-                                <p>Nothing here, got to the previous page</p>
-                            </main>
-                        }
-                    />
+                    <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
